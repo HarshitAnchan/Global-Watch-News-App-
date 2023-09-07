@@ -1,16 +1,22 @@
-API_KEY = "d5ac551d76d545b686acfce4642835be";
-const url = "https://newsapi.org/v2/everything?q=";
+const API_KEY = "d5ac551d76d545b686acfce4642835be"; 
+const API_BASE_URL = "https://newsapi.org/v2/everything?q="; 
+
+window.addEventListener("load", () => fetchNews("Global"));
+
+async function fetchNews(query) {
+    try {
+        const res = await fetch(`${API_BASE_URL}${query}&apiKey=${API_KEY}`);
+        const data = await res.json();
+        bindData(data.articles);
+    } catch (error) {
+        console.error("Error fetching news:", error);
+    }
+}
 
 window.addEventListener("load", () => fetchNews("Global"));
 
 function reload() {
     window.location.reload();
-}
-
-async function fetchNews(query) {
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-    const data = await res.json();
-    bindData(data.articles);
 }
 
 function bindData(articles) {
