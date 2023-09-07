@@ -3,16 +3,21 @@ const API_BASE_URL = "https://newsapi.org/v2/everything?q=";
 
 window.addEventListener("load", () => fetchNews("Global"));
 
+
 async function fetchNews(query) {
     try {
         const res = await fetch(`${API_BASE_URL}${query}&apiKey=${API_KEY}`);
         const data = await res.json();
-        bindData(data.articles);
+
+        if (data.articles && data.articles.length > 0) {
+            bindData(data.articles);
+        } else {
+            console.error("No articles found for the given query.");
+        }
     } catch (error) {
         console.error("Error fetching news:", error);
     }
 }
-
 window.addEventListener("load", () => fetchNews("Global"));
 
 function reload() {
